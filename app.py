@@ -8,7 +8,7 @@ df = pd.read_csv(
 
 st.write(
     '''
-# Titanic Visualization 1
+# My question one: Did men in first class have a higher survival rate than women in third class?
 
 '''
 )

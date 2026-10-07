@@ -17,30 +17,30 @@ df.columns = (
 def survival_demographics():
 
     # Creating age groups
-    df["age_category"] = pd.cut(
+    df["age_group"] = pd.cut(
         df["age"],
         bins=[0, 12, 19, 60, float("inf")],
         labels=["Child", "Teen", "Adult", "Senior"],
         right=False
     )
 
-    # Grouping by pclass, sex, and age_category
+    # Grouping by pclass, sex, and age_group
     results = (
         df.groupby(
-            ["pclass", "sex", "age_category"],
-            observed=True
+            ["pclass", "sex", "age_group"],
+            observed=False
         )
         # find n_passengers and n_survived
         .agg(
             n_passengers=("survived", "size"),
-            n_survived=("survived", "sum")
+            n_survivors=("survived", "sum")
         )
         .reset_index()
     )
 
     # find survival_rate
     results["survival_rate"] = (
-        results["n_survived"] / results["n_passengers"]
+        results["n_survivors"] / results["n_passengers"]
     )
 
     return results
