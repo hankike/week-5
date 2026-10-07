@@ -44,3 +44,56 @@ def survival_demographics():
     )
 
     return results
+
+# creating visualize_demographic function
+
+
+def visualize_demographic():
+
+    results = survival_demographics()
+
+    # Comparing pclass 1 men and pclass 3 women
+    comparison = results[
+        ((results["pclass"] == 1) & (results["sex"] == "male")) |
+        ((results["pclass"] == 3) & (results["sex"] == "female"))
+    ]
+
+    # comparing across the different age groups
+    comparison = (
+        comparison
+        .groupby("sex", observed=False)
+        .agg(
+            n_survivors=("n_survivors", "sum"),
+            n_passengers=("n_passengers", "sum")
+        )
+        .reset_index()
+    )
+
+    comparison["survival_rate"] = (
+        comparison["n_survivors"] / comparison["n_passengers"]
+    )
+
+    comparison["sex"] = comparison["sex"].replace({
+        "female": "Third Class Women",
+        "male": "First Class Men"
+    })
+
+    fig = px.bar(
+        comparison,
+        x="sex",
+        y="survival_rate",
+        title="Survival Rate of Third-Class Women vs First-Class Men",
+        labels={
+            "sex": "Sex",
+            "survival_rate": "Survival Rate"
+        },
+        color="sex",
+        color_discrete_map={
+            "Third Class Women": "pink",    # basic boy girl colors lol
+            "First Class Men": "blue"
+        }
+    )
+
+    fig.update_layout(showlegend=False)
+
+    return fig
