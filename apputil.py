@@ -11,6 +11,7 @@ df.columns = (
     .str.lower()
     .str.replace(" ", "_")
 )
+
 # exercise one in surival_demographics
 
 
@@ -73,7 +74,7 @@ def visualize_demographic():
         comparison["n_survivors"] / comparison["n_passengers"]
     )
 
-    comparison["sex"] = comparison["sex"].replace({
+    comparison["sex"] = comparison["sex"].replace({     # Changing the x-axis name for readability
         "female": "Third Class Women",
         "male": "First Class Men"
     })
@@ -97,3 +98,27 @@ def visualize_demographic():
     fig.update_layout(showlegend=False)
 
     return fig
+
+
+# exercise two in family_groups
+def family_groups():
+    # defining family size. we need siblings plus all of the parents
+    df["family_size"] = df["sibsp"] + df["parch"] + 1
+
+    # next we are finding the answers for part two
+    result = (
+        df.groupby(["pclass", "family_size"])
+        .agg(
+            n_passengers=("passengerid", "count"),
+            avg_fare=("fare", "mean"),
+            min_fare=("fare", "min"),
+            max_fare=("fare", "max")
+        )
+        .reset_index()
+        .sort_values(["pclass", "family_size"])
+    )
+
+    return result
+
+
+family_groups()
