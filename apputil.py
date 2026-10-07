@@ -122,3 +122,10 @@ def family_groups():
 
 
 family_groups()
+
+# next we need to find last names
+
+
+def last_names():
+    names = df["name"].str.split(",").str[0]
+    return names.value_counts()

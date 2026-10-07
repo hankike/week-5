@@ -16,9 +16,14 @@ st.write(
 fig1 = visualize_demographic()
 st.plotly_chart(fig1, use_container_width=True)
 
+
+st.write("My findings are that the last-name count agree with the data table above.")
+st.write(last_names())
+
+
 st.write(
     '''
-# Titanic Visualization 2
+# My question two: Were there any members of a family with greater than three members on board where only one survived?
 '''
 )
 # Generate and display the figure
