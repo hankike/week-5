@@ -3,10 +3,11 @@ import streamlit as st
 from apputil import *
 
 # Load Titanic dataset
-df = pd.read_csv('https://raw.githubusercontent.com/leontoddjohnson/datasets/main/data/titanic.csv')
+df = pd.read_csv(
+    'https://raw.githubusercontent.com/leontoddjohnson/datasets/main/data/titanic.csv')
 
 st.write(
-'''
+    '''
 # Titanic Visualization 1
 
 '''
@@ -16,7 +17,7 @@ fig1 = visualize_demographic()
 st.plotly_chart(fig1, use_container_width=True)
 
 st.write(
-'''
+    '''
 # Titanic Visualization 2
 '''
 )
@@ -25,7 +26,7 @@ fig2 = visualize_families()
 st.plotly_chart(fig2, use_container_width=True)
 
 st.write(
-'''
+    '''
 # Titanic Visualization Bonus
 '''
 )
