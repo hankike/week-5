@@ -32,7 +32,7 @@ st.plotly_chart(fig2, use_container_width=True)
 
 st.write(
     '''
-# Titanic Visualization Bonus
+# Not sure if I will do this. Would like to see if survival rate was better for above or below median age based on class. I assume for first class older, rest younger 
 '''
 )
 # Generate and display the figure

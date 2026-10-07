@@ -129,3 +129,44 @@ family_groups()
 def last_names():
     names = df["name"].str.split(",").str[0]
     return names.value_counts()
+
+# Now making second graph for visualize_families
+
+
+def visualize_families():
+    df["last_name"] = df["name"].str.split(",").str[0]
+    df["family_size"] = df["sibsp"] + df["parch"] + 1
+
+    families = (
+        df.groupby(["last_name", "family_size"])
+        .agg(
+            survivors=("survived", "sum"),
+            passengers=("survived", "count")
+        )
+        .reset_index()
+    )
+
+    families = families[
+        (families["family_size"] > 3) &
+        (families["survivors"] == 1)
+    ]
+
+    families = families.sort_values("family_size", ascending=False)
+
+    fig = px.bar(
+        families,
+        x="last_name",
+        y="family_size",
+        color="family_size",
+        text="family_size",
+        color_continuous_scale="Viridis",
+        title="Families Larger Than Three Members With One Survivor",
+        labels={
+            "last_name": "Family",
+            "family_size": "Family Size"
+        }
+    )
+
+    fig.update_layout(showlegend=False)
+
+    return fig
